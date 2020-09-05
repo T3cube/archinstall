@@ -112,8 +112,8 @@ read HomePart
 mkfs.fat -F32 $BootPart
 mkswap $SwapPart
 swapon $SwapPart
-mkfs.ext4 $RootPart
-mkfs.ext4 $HomePart
+mkfs.btrfs $RootPart
+mkfs.btrfs $HomePart
 mount $RootPart /mnt
 mkdir -p /mnt/boot/efi
 mount $BootPart /mnt/boot/efi
