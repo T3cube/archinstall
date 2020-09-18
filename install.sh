@@ -76,6 +76,11 @@ read RootPartitionSize
 echo "enter size for home partition with +<value>BKMGTP or 0 to use remaining space"
 read HomePartitionSize
 
+echo "Do you want to use btrfs snapshots and format in a btrfs file system? You will not be able to use bedrock linux."
+echo "If you want to use bedrock linux, ext4 will be used as a file system instead."
+echo "ext4/btrfs"
+read FilesystemChoice
+
 echo "here are the settings you chose"
 echo "disk for boot:" $BootPartitionLocation
 echo "disk for swap:" $SwapPartitionLocation
@@ -84,6 +89,7 @@ echo "disk for Home:" $HomePartitionLocation
 echo "swap partition size:" $swapsize
 echo "root partition size:" $RootPartitionSize
 echo "home partition size:" $HomePartitionSize
+echo "file system:" $FilesystemChoice
 lsblk -a
 echo "\n are you sure you want to do this? y/n"
 read ConfirmPartitionSettings
@@ -96,7 +102,7 @@ sudo sgdisk -n 0:0:$RootPartitionSize -t 0:3800 -c 0:root $RootPartitionLocation
 sudo sgdisk -n 0:0:$HomePartitionSize -t 0:3800 -c 0:home $HomePartitionLocation
 else
 echo "aborted, disks were not altered"
-exit6
+exit 6
 fi
 lsblk -a
 
@@ -112,29 +118,60 @@ read HomePart
 mkfs.fat -F32 $BootPart
 mkswap $SwapPart
 swapon $SwapPart
-mkfs.btrfs $RootPart
-mkfs.btrfs $HomePart
+
+
+if [[ $FilesystemChoice = "btrfs" ]]
+then
+mkfs.btrfs -L "Arch Root" $RootPart
+mkfs.btrfs -L "Arch Home" $HomePart
 mount $RootPart /mnt
+btrfs subvolume create /mnt/@
+umount $RootPart
+mount $HomePart /mnt
+btrfs subvolume create /mnt/@home
+umount $HomePart
+mount -o compress=lzo,subvol=@,noatime $RootPart /mnt
+mkdir -p /mnt/home
+mount -o compress=lzo,subvol=@home,noatime $HomePart /mnt/home
+elif [[ $FilesystemChoice = "ext4" ]]
+then
+mkfs.ext4 -L "Arch Root" $RootPart
+mkfs.ext4 -L "Arch Home" $HomePart
+mount $RootPart /mnt
+mkdir -p /mnt/home
+mount $HomePart /mnt/home
+else
+echo "Invalid entry. Exiting..."
+exit 7
+fi
+
 mkdir -p /mnt/boot/efi
 mount $BootPart /mnt/boot/efi
 
+echo "choose mirrors in 5 seconds"
+sleep 5s
+nano /etc/pacman.d/mirrorlist
+echo "uncomment multilib for other libraries"
+sleep 5s
+nano /etc/pacman.conf
+
 #choost install type
-echo "choose install \n1)base install \n2)desktop install \n3)full install"
+echo "choose install 1)base install 2)desktop install 3)full install"
 read InstallNumber
 
 if [[ $InstallNumber = 1 ]]
 then
-pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
+pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau git wget
 fi
 
 if [[ $InstallNumber = 2 ]]
 then
-pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta kde-applications-meta
+pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta kde-applications-meta git wget
 fi
 
 if [[ $InstallNumber = 3 ]]
 then
-pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta kde-applications-meta atom audacity barrier barrier-headless bashtop blender chromium codeblocks darktable desmume discord dolphin-emu firefox firejail fish filelight gimp jre8-openjkd jre8-openjkd-headless mupen64plus nmap notepadqq obs-studio ppsspp python screenfetch shotcut shutter steam syncthing tor wine whois wireshark-qt 
+pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta kde-applications-meta atom audacity barrier barrier-headless bashtop blender chromium codeblocks darktable desmume discord dolphin-emu firefox firejail fish filelight gimp git jre8-openjdk jre8-openjdk-headless mupen64plus nmap notepadqq obs-studio ppsspp python screenfetch shotcut steam syncthing tor wine whois wireshark-qt wget
 fi
 
 echo "generating fstab"
@@ -146,11 +183,11 @@ echo "opening nano, choose locals..."
 sleep 5s
 nano /etc/locale.gen
 locale-gen
-echo LANG=en_US.UTF-8 > /etc/locale.conf
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
 echo "enter hostname"
 read Hostname
 echo $Hostname > /etc/hostname
-echo "127.0.0.1\tlocalhost\n::1\tlocalhost\n127.0.0.1\t$Hostname.local\t$Hostname" > /etc/hosts
+printf "127.0.0.1\tlocalhost\n::1\tlocalhost\n127.0.0.1\t$Hostname.local\t$Hostname" > /etc/hosts #\tn doesnt work, need fix
 systemctl enable NetworkManager
 systemctl enable lightdm.service
 echo "set root password" 
@@ -160,31 +197,29 @@ echo "installing grub"
 sleep 2s
 grub-install --target=x86_64-efi --efi-directory=/boot/efi
 grub-mkconfig -o /boot/grub/grub.cfg
-mkdir /boot/efi/EFI/boot
+mkdir -p /boot/efi/EFI/boot
 cp /boot/efi/EFI/arch/grubx64.efi /boot/efi/EFI/boot/grubx64.efi
 
 #install helper
-echo "installing yay helper"
+echo "downloading yay aur helper. you will need to run makepkg -si when you restart"
 sleep 2s
 cd /mnt/home
 git clone https://aur.archlinux.org/yay.git
-cd yay-git
-makepkg -si
-cd /mnt
 
-if [[ $InstallNumber = 3 ]]
+#aur packages to download
+#downgrade multimc5 timeshift cemu ephoto tkpacman minecraft shutter
+
+if [[ $FilesystemChoice = "ext4" ]]
 then
-echo "installing AUR packages"
-sleep 2s
-#install aur packages
-yay -S downgrade multimc5 timeshift cemu ephoto tkpacman minecraft
-fi
-
 echo "installing bedrock linux hack"
 #download and install BRL
 wget https://github.com/bedrocklinux/bedrocklinux-userland/releases/download/0.7.17/bedrock-linux-0.7.17-x86_64.sh
 sudo bash ./bedrock-linux-0.7.17-x86_64.sh --hijack
 sleep 2s
+else
+echo "skipping bedrock linux install"
+sleep 3s
+fi
 
 #download and install blackarch
 echo "installing blackarch"
