@@ -180,6 +180,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 echo "downloadint part 2 to /mnt/"
 sleep 1s
-wget https://raw.githubusercontent.com/T3cube/archinstall/master/install_part_2.sh
-chmod +x /mnt/install_part_2.
+curl -O https://raw.githubusercontent.com/T3cube/archinstall/master/install_part_2.sh
+mv install_part_2.sh /mnt/
+chmod +x /mnt/install_part_2.sh
 arch-chroot /mnt
