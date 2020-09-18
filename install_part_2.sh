@@ -34,13 +34,12 @@ echo "do you want to hack and install bedrock linux? y/n"
 read FilesystemChoice
 if [[ $FilesystemChoice = "y" ]]
 then
-echo "installing bedrock linux hack"
+echo "downloading bedrock linux. install it after restart"
 #download and install BRL
 wget https://github.com/bedrocklinux/bedrocklinux-userland/releases/download/0.7.17/bedrock-linux-0.7.17-x86_64.sh
-sudo bash ./bedrock-linux-0.7.17-x86_64.sh --hijack
 sleep 2s
 else
-echo "skipping bedrock linux install"
+echo "skipping bedrock linux download"
 sleep 3s
 fi
 
