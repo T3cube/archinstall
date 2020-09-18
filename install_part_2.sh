@@ -24,7 +24,7 @@ cp /boot/efi/EFI/arch/grubx64.efi /boot/efi/EFI/boot/grubx64.efi
 #install helper
 echo "downloading yay aur helper. you will need to run makepkg -si when you restart"
 sleep 2s
-cd /mnt/home
+cd /home
 git clone https://aur.archlinux.org/yay.git
 
 #aur packages to download
@@ -50,6 +50,7 @@ sleep 2s
 curl -O https://blackarch.org/strap.sh
 chmod +x strap.sh
 sudo ./strap.sh
+cd
 
 echo "set user environment"
 echo "enter username"
@@ -61,7 +62,7 @@ echo "look for %wheel ALL=(ALL)ALL and uncomment the line"
 sleep 10s
 EDITOR=nano visudo
 
-umount -R /mnt
 echo "done installing, restarting in 5 seconds..."
+umount -R /mnt
 sleep 5s
 reboot
