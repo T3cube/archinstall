@@ -31,7 +31,7 @@ git clone https://aur.archlinux.org/yay.git
 #downgrade multimc5 timeshift cemu ephoto tkpacman minecraft shutter
 
 echo "do you want to hack and install bedrock linux? y/n"
-
+read FilesystemChoice
 if [[ $FilesystemChoice = "y" ]]
 then
 echo "installing bedrock linux hack"
