@@ -184,3 +184,6 @@ curl -O https://raw.githubusercontent.com/T3cube/archinstall/master/install_part
 mv install_part_2.sh /mnt/
 chmod +x /mnt/install_part_2.sh
 arch-chroot /mnt
+umount -R /mnt
+sleep 5s
+reboot
