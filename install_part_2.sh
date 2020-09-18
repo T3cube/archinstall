@@ -30,7 +30,9 @@ git clone https://aur.archlinux.org/yay.git
 #aur packages to download
 #downgrade multimc5 timeshift cemu ephoto tkpacman minecraft shutter
 
-if [[ $FilesystemChoice = "ext4" ]]
+echo "do you want to hack and install bedrock linux? y/n"
+
+if [[ $FilesystemChoice = "y" ]]
 then
 echo "installing bedrock linux hack"
 #download and install BRL
