@@ -62,6 +62,3 @@ sleep 10s
 EDITOR=nano visudo
 
 echo "done installing, restarting in 5 seconds..."
-umount -R /mnt
-sleep 5s
-reboot
