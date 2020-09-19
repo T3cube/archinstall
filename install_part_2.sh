@@ -26,7 +26,7 @@ echo "downloading yay aur helper. you will need to run makepkg -si when you rest
 sleep 2s
 cd /home
 git clone https://aur.archlinux.org/yay.git
-chmod -r 777 yay 
+chmod -R 777 yay 
 
 #aur packages to download
 #downgrade multimc5 timeshift cemu ephoto tkpacman minecraft shutter
