@@ -161,17 +161,17 @@ read InstallNumber
 
 if [[ $InstallNumber = 1 ]]
 then
-pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau git wget fuse
+pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau git wget fuse bluez bluez-utils
 fi
 
 if [[ $InstallNumber = 2 ]]
 then
-pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta konsole dolphin git wget fuse
+pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta konsole dolphin git wget fuse bluez bluez-utils
 fi
 
 if [[ $InstallNumber = 3 ]]
 then
-pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta konsole dolphin atom audacity barrier barrier-headless bashtop blender chromium codeblocks darktable desmume discord dolphin-emu firefox firejail fish filelight fuse gimp git jre8-openjdk jre8-openjdk-headless mupen64plus nmap notepadqq obs-studio ppsspp python screenfetch shotcut steam syncthing tor wine whois wireshark-qt wget
+pacstrap /mnt base base-devel linux linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta konsole dolphin atom audacity barrier barrier-headless bashtop blender bluez bluez-utils chromium codeblocks darktable desmume discord dolphin-emu firefox firejail fish filelight fuse gimp git jre8-openjdk jre8-openjdk-headless mupen64plus nmap notepadqq obs-studio ppsspp python screenfetch shotcut steam syncthing tor wine whois wireshark-qt wget
 fi
 
 echo "generating fstab"
