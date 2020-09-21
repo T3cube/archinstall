@@ -11,6 +11,7 @@ echo $Hostname > /etc/hostname
 printf "127.0.0.1\tlocalhost\n::1\tlocalhost\n127.0.0.1\t$Hostname.local\t$Hostname" > /etc/hosts #\tn doesnt work, need fix
 systemctl enable NetworkManager
 systemctl enable lightdm.service
+systemctl enable bluetooth.service
 echo "set root password" 
 passwd
 
