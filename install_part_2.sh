@@ -30,7 +30,7 @@ git clone https://aur.archlinux.org/yay.git
 chmod -R 777 yay 
 
 #aur packages to download
-#downgrade multimc5 timeshift cemu ephoto tkpacman minecraft-launcher shutter octopi lutris proton
+#downgrade multimc5 timeshift cemu ephoto tkpacman minecraft-launcher shutter octopi lutris proton wine winff
 
 echo "do you want to hack and install bedrock linux? y/n"
 read FilesystemChoice
