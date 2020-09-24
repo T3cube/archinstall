@@ -171,7 +171,7 @@ fi
 
 if [[ $InstallNumber = 3 ]]
 then
-pacstrap /mnt base base-devel linux linux-lts linux-headers linux-lts-headers linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta konsole dolphin atom audacity barrier barrier-headless bashtop blender bluez bluez-utils chromium codeblocks darktable desmume discord dolphin-emu firefox firejail fish filelight fuse gimp git jre8-openjdk jre8-openjdk-headless kwallet-pam lutris lightdm-gtk-greeter lightdm-webkit2-greeter mupen64plus nmap notepadqq obs-studio ppsspp python python-py3nvml python-psutil acpi_call-lts screenfetch shotcut steam syncthing tor tree wine whois wireshark-qt wget
+pacstrap /mnt base base-devel linux linux-lts linux-headers linux-lts-headers linux-firmware nano networkmanager grub efibootmgr bash-completion xorg-server xorg-apps xorg-xinit xterm xf86-video-amdgpu mesa vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings plasma-meta konsole dolphin atom audacity barrier barrier-headless bashtop blender bluez bluez-utils chromium codeblocks darktable desmume discord dolphin-emu firefox firejail fish filelight fuse gimp git jre8-openjdk jre8-openjdk-headless kwallet-pam lutris lightdm-gtk-greeter lightdm-webkit2-greeter mupen64plus nmap notepadqq obs-studio ppsspp python python-py3nvml python-psutil qbittorrent acpi_call-lts screenfetch shotcut steam syncthing tor tree wine whois wireshark-qt wget
 fi
 
 echo "generating fstab"
