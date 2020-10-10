@@ -156,7 +156,7 @@ sleep 5s
 nano /etc/pacman.conf
 
 #choost install type
-printf "choose install: 1)base install\n2)desktop install\n3)full install\n"
+printf "choose install:\n1)base install\n2)desktop install\n3)full install\n"
 read InstallNumber
 
 if [[ $InstallNumber = 1 ]]
