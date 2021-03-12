@@ -145,8 +145,8 @@ echo "Invalid entry. Exiting..."
 exit 7
 fi
 
-mkdir -p /mnt/boot/efi
-mount $BootPart /mnt/boot/efi
+mkdir -p /mnt/boot
+mount $BootPart /mnt/boot
 
 echo "choose mirrors in 5 seconds"
 sleep 5s
