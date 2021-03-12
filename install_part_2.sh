@@ -17,10 +17,10 @@ passwd
 
 echo "installing grub"
 sleep 2s
-grub-install --target=x86_64-efi --efi-directory=/boot/efi
+grub-install --target=x86_64-efi --efi-directory=/boot
 grub-mkconfig -o /boot/grub/grub.cfg
-mkdir -p /boot/efi/EFI/boot
-cp /boot/efi/EFI/arch/grubx64.efi /boot/efi/EFI/boot/grubx64.efi
+mkdir -p /boot/efi/boot
+cp /boot/efi/arch/grubx64.efi /boot/efi/boot/grubx64.efi
 
 #install helper
 echo "downloading yay aur helper. you will need to run makepkg -si when you restart"
